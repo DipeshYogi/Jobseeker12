@@ -1,0 +1,32 @@
+{% extends 'jobskills/index2.html' %}
+
+{% load static %}
+{% block header %}
+  <link rel="icon" href="{% static 'images/J_ICON.ico' %}">
+  <title>Applied Profiles</title>
+{% endblock %}
+
+{% block content %}
+            <div class="content-section">
+              <div class="content-section">
+                <div class="media">
+                  <img src="{{ usr.profile.img.url }}" class="rounded-circle account-img" style="width:50px;height:50px;">
+                  <div class="media-body">
+                    <h2 class="account-heading">{{ usr.username }}</h2>
+                    <p class="text-secondary">{{ usr.profile.email }}</p>
+                    Primary Skills: <p class="text-primary" >{{ usr.profile.p_skills }}</p>
+                    Secondary Skills: <p class="text-primary" >{{ usr.profile.s_skills }}</p>
+                    Experience: <p class="text-primary" >{{ usr.profile.exp }} year/s</p>
+                    {% if slisted %}
+                      <h6>Shortlisted.</h6>
+                    {% else %}
+                        <form method="POST">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-outline-info">Shortlist</button>
+                        </form>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+{% endblock %}

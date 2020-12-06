@@ -1,0 +1,64 @@
+{% extends 'jobskills/index3.html' %}
+
+{% load static %}
+{% block header %}
+  <link rel="icon" href="{% static 'images/J_ICON.ico' %}">
+  <title>Job Details</title>
+{% endblock %}
+
+{% block content %}
+      <div class="container">
+          <article class="media content-section">
+            <img src="{{job.owner.profile.img.url}}" class="rounded-circle article-img" style="width:60px;height:60px;">&nbsp;&nbsp
+            <div class="media-body">
+              <div class="article-metadata">Posted by:
+                {{ job.owner }}
+                <small class="text-muted">{{ job.posted_date|date:'d/F/Y'}}</small>
+              </div>
+              <h2 class='article-title'>{{ job.title }}</h2>
+              <p class="article-content"><h6 style='color:black;'>Required Skills:</h6> {{ job.req_skills }}</p>
+              <p class="article-content"><h6 style='color:black;'>Job Type:</h6> {{ job.type }}</p>
+              <p class="article-content"><h6 style='color:black;'>Required experience:</h6> {{ job.exp }} years</p>
+              {% if job.owner == user %}
+                <div class="container">
+                  <a  href="{% url 'job-update' job.id %}">Update</a>&nbsp;&nbsp
+                  <a  href="{% url 'job-delete' job.id %}">Delete</a>
+                  </div>
+              {% endif %}
+            </div>
+          </article>
+      </div>
+
+          <br>
+          <br>
+
+          <div class="col-md-12 ftco-animate">
+            {% if usr  %}
+                <h6 style='color:black;'>Applied by:</h6>
+                {% for emp in usr %}
+                      <article class="media content-section">
+                          <div class="media-body">
+                          <div class="article-metadata">
+                            Name: <a class="mr-2" href="{% url 'applied-profile' emp.pk job.pk %}">{{ emp.username }}</a>
+                            <small class="text-muted">{{ emp.email}}</small>
+                        </div>
+                      </article>
+                {% endfor %}
+            {% endif %}
+          </div>
+
+{% endblock %}
+
+{% block short %}
+    {% if sl %}
+        {% for s in sl %}
+              <article class="media content-section">
+                  <div class="media-body">
+                  <div class="article-metadata">
+                    Name: <a class="mr-2" href="{% url 'applied-profile' s.id job.pk %}">{{ s.username }}</a>
+                    <small class="text-muted">{{ s.email}}</small>
+                </div>
+              </article>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

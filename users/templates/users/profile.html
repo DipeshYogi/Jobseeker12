@@ -1,0 +1,46 @@
+{% extends 'jobskills/index.html' %}
+
+{% load static %}
+{% block header %}
+  <link rel="icon" href="{% static 'images/J_ICON.ico' %}">
+  <title>Profile</title>
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block heading %}<h1>Profile</h1>{% endblock %}
+{% block content %}
+<section class="ftco-section bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9 pr-lg-4">
+        <div class="row">
+          <div class="content-section">
+            <div class="content-section">
+              <div class="media">
+                <img src="{{ user.profile.img.url }}" class="rounded-circle account-img" style="width:100px;height:100px;">
+                <div class="media-body">
+                  <h2 class="account-heading">{{ user.username }}</h2>
+                  <p class="text-secondary">{{ user.email }}</p>
+                </div>
+              </div>
+              <!--Form section -->
+              <form enctype='multipart/form-data'  method="POST">
+                  {% csrf_token %}
+                  <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Profile Info</legend>
+                    {{u_form|crispy}}
+                    {{p_form|crispy}}
+                  </fieldset>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-outline-info">Update</button>
+
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</<section>
+{% endblock %}

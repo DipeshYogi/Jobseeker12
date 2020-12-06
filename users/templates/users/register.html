@@ -1,0 +1,39 @@
+{% extends 'jobskills/index.html' %}
+
+{% load static %}
+{% block header %}
+  <link rel="icon" href="{% static 'images/J_ICON.ico' %}">
+  <title>Register</title>
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block heading %}<h1>Register</h1>{% endblock %}
+{% block content %}
+<section class="ftco-section bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9 pr-lg-4">
+        <div class="row">
+            <div class="content-section">
+              <form method="POST">
+                  {% csrf_token %}
+                  <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Register</legend>
+                    {{ form|crispy }}
+                  </fieldset>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-outline-info">Sign Up</button>
+                  </div>
+              </form>
+              <div class="border-top pt-3">
+                 <small class="text-muted">
+                    Already have an account?<a class="ml-2" href="login">LogIn</a>
+                 </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</<section>
+{% endblock %}

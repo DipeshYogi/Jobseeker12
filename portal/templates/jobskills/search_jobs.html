@@ -1,0 +1,63 @@
+{% extends 'jobskills/index.html' %}
+
+{% load static %}
+{% block header %}
+  <link rel="icon" href="{% static 'images/J_ICON.ico' %}">
+  <title>Job search</title>
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block heading %}
+  <div class="container">
+    {% if form %}
+      <form class="form-horizontal" method="POST">
+          {% csrf_token %}
+          <div class="form-row">
+              <div class="form-group col-md-6 mb-0">
+                {{ form.Skills|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-4 mb-0">
+                {{ form.Type|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-2 mb-0">
+                {{ form.Experience|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-2 mb-0">
+                <button class="form-control btn btn-primary" type="submit">Search</button>
+              </div>
+          </div>
+      </form>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    {% if jobs %}
+        <br>
+        <h4>Search results</h4>
+        {% for job in jobs %}
+        <div class="col-md-12 ftco-animate">
+          <div class="job-post-item p-4 d-block d-lg-flex align-items-center">
+
+            <div class="one-third mb-4 mb-md-0">
+              <div class="job-post-item-header align-items-center">
+                <span class="subadge">Posted by: {{ job.owner }}</span>
+                <h3 class="mr-3 text-black"><a href="#" style="color:black;">{{job.title}}</a></h3>
+              </div>
+              <div class="job-post-item-body d-block d-md-flex">
+                <div class="mr-3"><i class="icon-briefcase"></i> Experience: {{job.exp}} years</div>
+                <div><span class="icon-my_location"></span> Job type: {{job.type}}</div> &nbsp;&nbsp;&nbsp
+                <div><i class="icon-calendar"></i> Posted on:{{job.posted_date|date:'d/m/Y'}} </div>
+              </div>
+            </div>
+            <div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
+              <a href="{% url 'job-detail' job.id %}" class="btn btn-primary py-2">View Job</a>
+            </div>
+          </div>
+        </div><!-- end -->
+        {% endfor %}
+      {% endif %}
+  </div>
+
+{% endblock %}

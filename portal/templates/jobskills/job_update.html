@@ -1,0 +1,35 @@
+{% extends 'jobskills/index.html' %}
+
+{% load static %}
+{% block header %}
+  <link rel="icon" href="{% static 'images/J_ICON.ico' %}">
+  <title>Update</title>
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block heading %}<h1>Update Job</h1>{% endblock %}
+{% block content %}
+<section class="ftco-section bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9 pr-lg-4">
+        <div class="row">
+            <div class="content-section">
+              <form method="POST">
+                  {% csrf_token %}
+                  <fieldset class="form-group">
+                      <legend class="border-bottom mb-4">Job Post</legend>
+                      {{form|crispy}}
+                  </fieldset>
+                  <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Update</button>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

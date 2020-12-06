@@ -1,0 +1,63 @@
+{% extends 'jobskills/index.html' %}
+{% load static %}
+{% block header %}
+  <link rel="icon" href="{% static 'images/J_ICON.ico' %}">
+  <title>All Jobs</title>
+{% endblock %}
+
+{% block heading %}
+  <h1 class="mb-3">All Jobs</h1>
+{% endblock %}
+
+{% block content %}
+  <section class="ftco-section bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9 pr-lg-4">
+          <div class="row">
+            {% for job in jobs %}
+            <div class="col-md-12 ftco-animate">
+              <div class="job-post-item p-4 d-block d-lg-flex align-items-center">
+
+                <div class="one-third mb-4 mb-md-0">
+                  <div class="job-post-item-header align-items-center">
+                    <span class="subadge">Posted by: {{ job.owner }}</span>
+                    <h3 class="mr-3 text-black"><a href="#" style="color:black;">{{job.title}}</a></h3>
+                  </div>
+                  <div class="job-post-item-body d-block d-md-flex">
+                    <div class="mr-3"><i class="icon-briefcase"></i> Experience: {{job.exp}} years</div>
+                    <div><span class="icon-my_location"></span>Job type: {{job.type}}</div> &nbsp;&nbsp;&nbsp
+                    <div><span class="icon-calendar"></span> Posted on:{{job.posted_date|date:'d/m/Y'}} </div>
+                  </div>
+                </div>
+                <div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
+                  <a href="{% url 'job-detail' job.id %}" class="btn btn-primary py-2">View Job</a>
+                </div>
+              </div>
+            </div><!-- end -->
+            {% endfor %}
+              <div class="container mx-auto" style="width: 400px;"">
+                {% if jobs.has_previous %}
+                   <a class="btn btn-outline-info mb-4" href="?page=1"><<</a>
+                   <a class="btn btn-outline-info mb-4" href="?page={{jobs.previous_page_number}}"><</a>
+                {% endif %}
+
+                {% for num in jobs.paginator.page_range %}
+                  {% if jobs.number == num %}
+                    <a class="btn btn-info mb-4" href="?page={{num}}">{{num}}</a>
+                  {% elif num > jobs.number|add:'-3' and num < jobs.number|add:'3' %}
+                    <a class="btn btn-outline-info mb-4" href="?page={{num}}">{{num}}</a>
+                  {% endif %}
+                {% endfor %}
+
+                {% if jobs.has_next %}
+                   <a class="btn btn-outline-info mb-4" href="?page={{jobs.next_page_number}}">></a>
+                   <a class="btn btn-outline-info mb-4" href="?page={{jobs.paginator.num_pages}}">>></a>
+                {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
